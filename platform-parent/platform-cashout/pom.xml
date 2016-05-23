@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>cn.com.tcxy</groupId>
+		<artifactId>platform-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>platform-cashout</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk16</artifactId>
+			<version>1.46</version>
+		</dependency>
+		<dependency>
+			<groupId>com.unionpay.acp</groupId>
+			<artifactId>upacp_sdk</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.com.tcxy</groupId>
+			<artifactId>platform-test</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>chinapay</groupId>
+			<artifactId>chinapay-netpayclient</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	</dependencies>
+
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<union.cashout.back.url>http://dev.pay.yunjuhe.com.cn/unionPay/cashout/callback</union.cashout.back.url>
+				<alipay.notify.url>http://dev.admin.yunjuhe.com.cn/alipay/alipaynotifyurl</alipay.notify.url>
+        		
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<union.cashout.back.url>http://pay.yunjuhe.com.cn/unionPay/cashout/callback</union.cashout.back.url>
+				<alipay.notify.url>http://admin.yunjuhe.com.cn/alipay/alipaynotifyurl</alipay.notify.url>
+        		
+			</properties>
+		</profile>
+		<profile>
+			<id>pre</id>
+			<properties>
+				<union.cashout.back.url>http://pre.pay.tcxy.com.cn/unionPay/cashout/callback</union.cashout.back.url>
+				<alipay.notify.url>http://pre.admin.tcxy.com.cn/alipay/alipaynotifyurl</alipay.notify.url>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<union.cashout.back.url>http://pay.tcxy.com.cn/unionPay/cashout/callback</union.cashout.back.url>
+				<alipay.notify.url>http://admin.tcxy.com.cn/alipay/alipaynotifyurl</alipay.notify.url>
+        		
+			</properties>
+		</profile>
+		<profile>
+			<id>demo</id>
+			<properties>
+				<union.cashout.back.url>http://demo.pay.yunjuhe.com.cn/unionPay/cashout/callback</union.cashout.back.url>
+				<alipay.notify.url>http://demo.pay.yunjuhe.com.cn/alipay/alipaynotifyurl</alipay.notify.url>
+        		
+			</properties>
+		</profile>
+	</profiles>
+
+</project>

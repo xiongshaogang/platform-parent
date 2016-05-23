@@ -1,0 +1,4 @@
+cn\com\tcxy\mapper\SmsVerificationLogMapper.class
+cn\com\tcxy\mapper\MailLogMapper.class
+cn\com\tcxy\mapper\DictionaryMapper.class
+cn\com\tcxy\mapper\MailVerificationLogMapper.class

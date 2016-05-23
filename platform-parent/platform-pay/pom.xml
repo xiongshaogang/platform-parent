@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>cn.com.tcxy</groupId>
+		<artifactId>platform-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>platform-pay</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk16</artifactId>
+			<version>1.46</version>
+		</dependency>
+		<dependency>
+			<groupId>com.unionpay.acp</groupId>
+			<artifactId>upacp_sdk</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.com.tcxy</groupId>
+			<artifactId>platform-test</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<union.front.url>http://dev.mall.yunjuhe.com.cn/mallOrder/returnPay</union.front.url>
+				<union.back.url>http://dev.pay.yunjuhe.com.cn/unionPay/callback</union.back.url>
+				<alipay.callback.url2>http://dev.pay.yunjuhe.com.cn/alipay/callback2</alipay.callback.url2>
+				<alipay.return_url>http://dev.mall.yunjuhe.com.cn/mallOrder/returnPay</alipay.return_url>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<union.front.url>http://mall.yunjuhe.com.cn/mallOrder/returnPay</union.front.url>
+				<union.back.url>http://pay.yunjuhe.com.cn/unionPay/callback</union.back.url>
+				<alipay.callback.url2>http://pay.yunjuhe.com.cn/alipay/callback2</alipay.callback.url2>
+				<alipay.return_url>http://mall.yunjuhe.com.cn/mallOrder/returnPay</alipay.return_url>
+			</properties>
+		</profile>
+		<profile>
+			<id>pre</id>
+			<properties>
+				<union.front.url>http://pre.mall.tcxy.com.cn/mallOrder/returnPay</union.front.url>
+				<union.back.url>http://pre.pay.tcxy.com.cn/unionPay/callback</union.back.url>
+				<alipay.callback.url2>http://pre.pay.tcxy.com.cn/alipay/callback2</alipay.callback.url2>
+				<alipay.return_url>http://pre.mall.tcxy.com.cn/mallOrder/returnPay</alipay.return_url>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<union.front.url>http://mall.tcxy.com.cn/mallOrder/returnPay</union.front.url>
+				<union.back.url>http://pay.tcxy.com.cn/unionPay/callback</union.back.url>
+				<alipay.callback.url2>http://pay.tcxy.com.cn/alipay/callback2</alipay.callback.url2>
+				<alipay.return_url>http://mall.tcxy.com.cn/mallOrder/returnPay</alipay.return_url>
+			</properties>
+		</profile>
+		<profile>
+			<id>demo</id>
+			<properties>
+				<union.front.url>http://demo.mall.yunjuhe.com.cn/mallOrder/returnPay</union.front.url>
+				<union.back.url>http://demo.pay.yunjuhe.com.cn/unionPay/callback</union.back.url>
+				<alipay.callback.url2>http://demo.pay.yunjuhe.com.cn/alipay/callback2</alipay.callback.url2>
+				<alipay.return_url>http://demo.mall.yunjuhe.com.cn/mallOrder/returnPay</alipay.return_url>
+			</properties>
+		</profile>
+	</profiles>
+
+</project>

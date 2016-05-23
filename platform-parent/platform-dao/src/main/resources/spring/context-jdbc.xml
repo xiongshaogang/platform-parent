@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/data/mongo    
+        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd  ">
+
+    <util:properties id="jdbcProperties" location="classpath:jdbc.properties"/>
+    <context:property-placeholder properties-ref="jdbcProperties" ignore-unresolvable="true"/>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <property name="timeBetweenEvictionRunsMillis">
+            <value>3600000</value><!--1 hours-->
+        </property>
+        <property name="minEvictableIdleTimeMillis">
+            <value>28800000</value><!--8 hours-->
+        </property>
+         
+        <!-- 当从连接池中取连接时，首先验证该连接是否有效。 -->
+        <property name="testOnBorrow">
+            <value>true</value>
+        </property>
+        <!-- 用于验证连接是否有效的SQL语句 -->
+        <property name="validationQuery">
+            <value>select 1</value>
+        </property>
+    </bean>
+
+    <mongo:mongo host="${mongodb.host}" port="${mongodb.port}">
+		<mongo:options connections-per-host="200"
+			threads-allowed-to-block-for-connection-multiplier="100"
+			connect-timeout="1000" 
+			max-wait-time="1500" 
+			auto-connect-retry="true"
+			socket-keep-alive="true" 
+			socket-timeout="1500" 
+			slave-ok="true"
+			write-number="1" 
+			write-timeout="0" 
+			write-fsync="true" />
+	</mongo:mongo>
+
+	<mongo:db-factory dbname="${mongodb.dbname}" username="${mongodb.username}" password="${mongodb.password}" mongo-ref="mongo" />
+	
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+	</bean>
+
+</beans>

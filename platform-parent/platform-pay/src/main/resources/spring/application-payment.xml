@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+        
+	<context:component-scan base-package="cn.com.tcxy"/>    
+
+    <util:properties id="acpSdkProperties" location="classpath:config/acp_sdk.properties"/>
+    <context:property-placeholder properties-ref="acpSdkProperties" ignore-unresolvable="true"/>
+    
+    <util:properties id="wechatProperties" location="classpath:config/wechat.properties"/>
+    <context:property-placeholder properties-ref="wechatProperties" ignore-unresolvable="true"/>
+    
+     <util:properties id="alipayProperties" location="classpath:config/alipay_config.properties"/>
+    <context:property-placeholder properties-ref="alipayProperties" ignore-unresolvable="true"/>
+    
+    <bean class="cn.com.tcxy.payment.prop.PaymentProperties">
+    	<property name="unionPayProperties" ref="acpSdkProperties" />
+    	<property name="wechatProperties" ref="wechatProperties" />
+    	<property name="alipayProperties" ref="alipayProperties" />
+    </bean>
+  
+</beans>

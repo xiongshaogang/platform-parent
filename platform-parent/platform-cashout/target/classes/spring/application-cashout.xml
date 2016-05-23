@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+        
+	<context:component-scan base-package="cn.com.tcxy"/>    
+
+    <util:properties id="acpSdkCashoutProperties" location="classpath:config/acp_cashout_sdk.properties"/>
+    <context:property-placeholder properties-ref="acpSdkCashoutProperties" ignore-unresolvable="true"/>
+    
+     <util:properties id="alipayCashoutProperties" location="classpath:config/alipay_cashout_config.properties"/>
+    <context:property-placeholder properties-ref="alipayCashoutProperties" ignore-unresolvable="true"/>
+    
+    <util:properties id="chinapayCashoutProperties" location="classpath:config/chinapay_cashout_config.properties"/>
+    <context:property-placeholder properties-ref="chinapayCashoutProperties" ignore-unresolvable="true"/>
+    
+    <bean class="cn.com.tcxy.cashout.prop.CashoutProperties">
+    	<property name="unionPayCashoutProperties" ref="acpSdkCashoutProperties" />
+    	<property name="alipayCashoutProperties" ref="alipayCashoutProperties" />
+    	<property name="chinapayCashoutProperties" ref="chinapayCashoutProperties" />
+    </bean>
+  
+</beans>

@@ -1,0 +1,7 @@
+cn\com\tcxy\dfs\DfsServiceTest.class
+cn\com\tcxy\template\FreeMarkerTemplateTest.class
+cn\com\tcxy\dfs\OSSDfsServiceTest.class
+cn\com\tcxy\sms\SmsSenderTest.class
+cn\com\tcxy\sms\SmsServiceTest.class
+cn\com\tcxy\cache\CacheServiceTest.class
+cn\com\tcxy\mail\MailServiceTest.class

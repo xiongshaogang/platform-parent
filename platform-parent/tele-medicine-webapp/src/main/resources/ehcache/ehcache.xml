@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+
+	<diskStore path="java.io.tmpdir/store" />
+
+	<!-- DefaultCache setting. -->
+	<defaultCache maxElementsInMemory="15000" memoryStoreEvictionPolicy="LRU" eternal="false"
+		timeToIdleSeconds="600" timeToLiveSeconds="600" overflowToDisk="false" diskPersistent="false" />
+
+	<cache name="org.taha.cache.METHOD_CACHE"
+        maxElementsInMemory="15000"
+        eternal="false"
+        timeToIdleSeconds="600"
+        timeToLiveSeconds="600"
+        overflowToDisk="true"
+        />
+        
+    <cache name="com.dvn.telemedicine.core.writer"
+        maxElementsInMemory="15000"
+        eternal="false"
+        timeToIdleSeconds="3000"
+        timeToLiveSeconds="3600"
+        overflowToDisk="true"
+        /> 
+        
+        
+        
+			
+</ehcache>

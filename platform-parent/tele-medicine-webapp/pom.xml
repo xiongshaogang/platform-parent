@@ -1,0 +1,255 @@
+﻿<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.com.tcxy</groupId>
+        <artifactId>platform-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <groupId>com.dvn</groupId>
+    <artifactId>tele-medicine-webapp</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+ <build>
+        <finalName>tele-medicine</finalName>
+        
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.tomcat.maven</groupId>
+                    <artifactId>tomcat7-maven-plugin</artifactId>
+                    <version>${plugin.tomcat.version}</version>
+                    <configuration>
+                        <!-- For dev -->
+                        <port>8080</port>
+                        <uriEncoding>UTF-8</uriEncoding>
+                        <update>true</update>
+                        <!-- 
+                       	<url>http://192.168.50.116:88/manager/text</url>
+                        <username>tcxy</username>
+                       	<password>tcxy!@#890</password> 
+                       	<path>/${project.build.finalName}</path>
+                         -->
+                        <url>${tomcat.url}</url>
+                        <username>${tomcat.username}</username>
+                        <password>${tomcat.password}</password> 
+                        <path>/${tomcat.path}</path>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>mysql</groupId>
+                            <artifactId>mysql-connector-java</artifactId>
+                            <version>${mysql.jdbc.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <!-- 项目属性 -->
+    <properties>
+        <springside.version>3.3.4</springside.version>
+        <hibernate.version>3.5.5-Final</hibernate.version>
+        <jersey.version>1.3</jersey.version>
+        <spring-security.version>3.0.3.RELEASE</spring-security.version>
+        <quartz.version>1.8.4</quartz.version>
+    </properties>
+    
+<profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <tele.medicine.jdbc.driverClassName>com.mysql.jdbc.Driver</tele.medicine.jdbc.driverClassName>
+                <tele.medicine.jdbc.url>jdbc:mysql://192.168.50.119:3306/tele_medicine?useUnicode=true&amp;characterEncoding=utf-8</tele.medicine.jdbc.url>
+                <tele.medicine.jdbc.username>tcxy</tele.medicine.jdbc.username>
+                <tele.medicine.jdbc.password>tcxy@#$dev</tele.medicine.jdbc.password>
+                
+                <tomcat.url>http://192.168.50.119:83/manager/text</tomcat.url>
+                <tomcat.username>tcxy</tomcat.username>
+                <tomcat.password>tcxy!@#890</tomcat.password>
+                <tomcat.path>ROOT</tomcat.path>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <tele.medicine.jdbc.driverClassName>com.mysql.jdbc.Driver</tele.medicine.jdbc.driverClassName>
+                <tele.medicine.jdbc.url>jdbc:mysql://192.168.50.117:3306/tele_medicine?useUnicode=true&amp;characterEncoding=utf-8</tele.medicine.jdbc.url>
+                <tele.medicine.jdbc.username>tcxy</tele.medicine.jdbc.username>
+                <tele.medicine.jdbc.password>tcxy@#$dev</tele.medicine.jdbc.password>
+                
+                <tomcat.url>http://192.168.50.117:83/manager/text</tomcat.url>
+                <tomcat.username>tcxy</tomcat.username>
+                <tomcat.password>tcxy!@#890</tomcat.password>
+                <tomcat.path>ROOT</tomcat.path>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <tele.medicine.jdbc.driverClassName>com.mysql.jdbc.Driver</tele.medicine.jdbc.driverClassName>
+                <tele.medicine.jdbc.url>jdbc:mysql://10.141.62.149:3306/telemedicinenew?useUnicode=true&amp;characterEncoding=utf-8</tele.medicine.jdbc.url>
+                <tele.medicine.jdbc.username>dvnchina</tele.medicine.jdbc.username>
+                <tele.medicine.jdbc.password>dvnchinatxdb2014</tele.medicine.jdbc.password>
+                
+                <tomcat.url>http://121.40.149.225:83/manager/text</tomcat.url>
+                <tomcat.username>tcxy</tomcat.username>
+                <tomcat.password>tcxy!@#890</tomcat.password>
+                <tomcat.path>ROOT</tomcat.path>
+            </properties>
+        </profile>
+    </profiles>
+    <!-- 依赖项定义 -->
+    <dependencies>
+        <dependency>
+            <groupId>org.springside</groupId>
+            <artifactId>springside3-core</artifactId>
+            <version>${springside.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+
+        <!-- hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>xml-apis</artifactId>
+                    <groupId>xml-apis</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.12.1.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+        </dependency>
+ <dependency>
+	<groupId>org.codehaus.jackson</groupId>
+	<artifactId>jackson-jaxrs</artifactId>
+	<version>1.9.13</version>
+</dependency>
+  <dependency>
+		<groupId>com.sun.jersey</groupId>
+		<artifactId>jersey-server</artifactId>
+		<version>1.8</version>
+	</dependency>
+	<dependency>
+		<groupId>com.sun.jersey</groupId>
+		<artifactId>jersey-json</artifactId>
+		<version>1.8</version>
+	</dependency>
+	
+        <!-- rest begin -->
+        <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-spring</artifactId>
+            <version>1.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-web</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-aop</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>1.8.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.xmemcached</groupId>
+            <artifactId>xmemcached</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+
+        <!-- telemedicine-core 开始 -->
+        <dependency>
+            <groupId>com.dvn</groupId>
+            <artifactId>telemedicine-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dvn</groupId>
+            <artifactId>ecglib</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!-- <dependency>
+            <groupId>com.dvn</groupId>
+            <artifactId>medicine-pwc</artifactId>
+            <version>2.0</version>
+        </dependency> -->
+        <!--  <dependency>
+            <groupId>com.dvn</groupId>
+            <artifactId>pwc</artifactId>
+            <version>1.0.0</version>
+        </dependency> -->
+        <!-- telemedicine-core 结束 -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+
+    </dependencies>
+
+   
+
+    <repositories>
+        <repository>
+            <id>nexus</id>
+            <name>Team Nexus Release Repository</name>
+            <url>http://runchain.3322.org:8081/nexus/content/repositories/releases</url>
+        </repository>
+    </repositories>
+
+</project>

@@ -1,0 +1,128 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.com.tcxy</groupId>
+        <artifactId>lib-parent</artifactId>
+        <version>24</version>
+    </parent>
+    <artifactId>platform-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <log4j.appender>stdout</log4j.appender>
+        <log4j.level>DEBUG</log4j.level>
+        <log4j.log.file>./${project.artifactId}.log</log4j.log.file>
+        <!-- <log4j.log.file>../log/${project.artifactId}.log</log4j.log.file> -->
+
+        <mail.host>mail.tcxy.com.cn</mail.host>
+        <mail.username>service@tcxy.com.cn</mail.username>
+        <mail.password>service2014</mail.password>
+        <mail.from>service@tcxy.cn</mail.from>
+
+        <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
+        <jdbc.url>jdbc:mysql://192.168.50.116:3306/tcxy_cloud?zeroDateTimeBehavior=convertToNull&amp;characterEncoding=UTF-8</jdbc.url>
+        <jdbc.username>admin</jdbc.username>
+        <jdbc.password>tcxy@#$dev</jdbc.password>
+        <jdbc.maxActive>2</jdbc.maxActive>
+        <jdbc.initialSize>2</jdbc.initialSize>
+        <jdbc.maxWait>6000</jdbc.maxWait>
+        <jdbc.maxIdle>2</jdbc.maxIdle>
+        <jdbc.minIdle>2</jdbc.minIdle>
+		
+        <mongodb.host>192.168.50.121</mongodb.host>
+        <mongodb.port>27017</mongodb.port>
+        <mongodb.dbname>admin</mongodb.dbname>
+        <mongodb.username>root</mongodb.username>
+        <mongodb.password>tcxy!@#890</mongodb.password>
+
+        <mq.broker.url>tcp://10.100.210.102:61616</mq.broker.url>
+        <mq.username>admin</mq.username>
+        <mq.password>admin</mq.password>
+
+        <static.resources.url>http://127.0.0.1:8080</static.resources.url>
+        <cache.servers>10.100.210.121:11211;10.100.210.122:11211</cache.servers>
+
+        <sms.wsdl.url>http://121.199.48.186:1210/Services/MsgSend123.asmx?WSDL</sms.wsdl.url>
+        <sms.username>bxds</sms.username>
+        <sms.password>pwd</sms.password>
+    </properties>
+
+    <modules>
+        <module>platform-test</module>
+        <module>platform-common</module>
+        <module>platform-model</module>
+        <module>platform-dao</module>
+        <module>platform-jms</module>
+        <module>platform-framework</module>
+        <module>platform-business</module>
+        <module>platform-pay</module>
+        <module>platform-cashout</module>
+    </modules>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <log4j.appender>logfile</log4j.appender>
+                <log4j.level>DEBUG</log4j.level>
+                <log4j.log.file>./${project.artifactId}.log</log4j.log.file>
+
+                <static.resources.url>http://bk.tcxycdn.com</static.resources.url>
+                <cache.servers>10.100.210.121:11211;10.100.210.122:11211</cache.servers>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <log4j.appender>rollingFile</log4j.appender>
+                <log4j.level>INFO</log4j.level>
+                <log4j.log.file>./${project.artifactId}.log</log4j.log.file>
+
+                <static.resources.url>http://bk.tcxycdn.com</static.resources.url>
+                <cache.servers>10.100.210.121:11211;10.100.210.122:11211</cache.servers>
+            </properties>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>1.5.4.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>2.2.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>

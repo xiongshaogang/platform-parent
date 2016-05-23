@@ -1,0 +1,1 @@
+您预约了${advisory.doctorName}大夫的专家门诊，时间为${advisory.confirmCallDatetime?string("yyyy-MM-dd HH:mm")}，请及时到访，有任何疑问请拨打400-9999-529电话垂询

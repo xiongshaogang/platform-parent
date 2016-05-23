@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	default-lazy-init="true">
+
+	<description>Spring 定时任务 </description>
+
+	<!--定时任务设置:导入成员每日检测项记录操作 -->
+	<bean id="xcheckReportItemAverageDayJob" class="org.springframework.scheduling.quartz.JobDetailBean" scope="prototype">
+		<property name="jobClass" value="com.dvn.telemedicine.quartz.job.XcheckReportItemAverageDayJob" />
+		<property name="jobDataAsMap">
+           <map>
+               <entry key="sessionFactory" value-ref="sessionFactory"></entry>
+               <entry key="xcheckReportItemAverageDayService" value-ref="xcheckReportItemAverageDayService"></entry>
+           </map>
+        </property>
+	</bean>
+	<bean id="xcheckReportItemAverageDayJobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="xcheckReportItemAverageDayJob" />
+		<property name="cronExpression">
+			<value>00 00 18 * * ?</value>
+		</property>
+	</bean>    
+	
+	<!-- 总管理类结束--> 
+
+	<bean id="quartzFactory" lazy-init="false" autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<description>Trigger entry</description>
+		<property name="triggers">
+			<list>
+				<!-- 每日检测项记录数据导入-->
+				<ref local="xcheckReportItemAverageDayJobTrigger"/>
+			</list>
+		</property>
+	</bean>
+</beans>
